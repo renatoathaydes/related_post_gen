@@ -2,6 +2,7 @@ class Post {
   final String iD;
   final String title;
   final List<String> tags;
+  Map<String, Object>? results;
 
   Post({
     required this.iD,
