@@ -32,8 +32,9 @@ void main() {
 
   // preallocate and reuse
   final taggedPostCount = Int32List(posts.length);
+  final allRelatedPosts = List<Map<String, Object>>.filled(posts.length, const {});
 
-  final allRelatedPosts = List.generate(posts.length, (i) {
+  for (var i = 0; i < posts.length; i++) {
     final post = posts[i];
 
     // For now simply inline fillRange which is unfortunately too slow.
@@ -74,14 +75,14 @@ void main() {
       minTags = top5[topN * 2 - 2];
     }
 
-    return {
+    allRelatedPosts[i] = {
       "_id": post.iD,
       "tags": post.tags,
       "related": [
         for (var i = 1; i < 10; i += 2) posts[top5[i]],
       ],
     };
-  });
+  }
 
   print('Processing time (w/o IO): ${sw.elapsedMilliseconds}ms');
 
